@@ -23,19 +23,15 @@ const generateRefreshTokenAndAccessToken = async (userId)=>{
    }
 
 }
-//her we write main response of request / main logic of in-coming https request
-const registerUser = asyncHandler(async (req,res) => {
-    //get data from user 
-     const {fullName,username,email,password} = req.body
-    // console.log(req.body)
 
-     //validate user detail - we can all apply if-else condition on each state
+const registerUser = asyncHandler(async (req,res) => {
+    
+     const {fullName,username,email,password} = req.body
+  
      if([fullName,username,email,password].some((field)=>field?.trim()==="")){
         throw ApiError(400,"all fields are required")
      }
      
-     //check if use is already registered or not ?
-     //we can access all users of data base via UserSchema which is User 
      const existedUser = await User.findOne({
         $or: [{ username }, { email }]
     })
@@ -43,21 +39,17 @@ const registerUser = asyncHandler(async (req,res) => {
     if (existedUser) {
         throw new ApiError(409, "User with email or username already exists")
     }
-    //handle images : avatar
+   
     const avatarLocalPath = req.files?.avatar?.[0]?.path;   //multer adds files
 
-    //console.log(avatarLocalPath)
-
-    
-   // const coverImageLocalPath = req.files?.coverimage[0]?.path
+   
    let coverImageLocalPath;
    if (req.files && Array.isArray(req.files.coverimage) && req.files.coverimage.length > 0) {
        
     coverImageLocalPath = req.files.coverimage?.[0]?.path
-    //console.log(coverImageLocalPath)
+   
    }
 
-    //validation for avatar
     //upload file to cloudinary
     const avatar = await uploadOnCloudinary(avatarLocalPath)
     //upload cover image
@@ -70,8 +62,6 @@ const registerUser = asyncHandler(async (req,res) => {
 
     //validate is really avatar is there or not ?
     if(!avatar) throw new ApiError(400,"avatar image is required")
-
-    //create obj in database and upload all user data into DB via create() query
 
    const user = await User.create({
         fullName,
@@ -270,7 +260,7 @@ const UpdateUserPassword = asyncHandler(async(req,res)=>{
 
     return res.status(200)
     .json(
-        new ApiResponse(200 , {} , "password changed successfully as")
+        new ApiResponse(200 , {passwordChanged : true} , "password changed successfully as")
     )
     
 })
