@@ -60,47 +60,7 @@ const getUserChannelSubscribers = asyncHandler(async (req, res) => {
               channel:  new mongoose.Types.ObjectId(_channelId),
             },
           },
-          // {
-          //   $lookup: {
-          //     from: "User",
-          //     localField: "subscriber",
-          //     foreignField: "_id",
-          //     as: "subscribers",
-              // pipeline: [
-              //   {
-              //     $project: {
-              //       username: 1,
-              //       fullName: 1,
-              //       avatar: 1,
-              //       createdAt: 1,
-              //     },
-              //   },
-              // ],
-           // },
-          //},
-        //   {
-        //     $addFields: {
-        //       subscribersCount: {
-        //         $size: "$subscribers",
-        //       },
-        //       isSubscribed: {
-        //         $cond: {
-        //           if: { $in: [req.user?._id, "$subscribers.subscriber"] },
-        //           then: true,
-        //           else: false,
-        //         },
-        //       },
-        //     },
-        //   },
-        // //stage 4
-        // {
-        //     $project: {
-        //       _id: 0,
-        //       subscribers: 1,
-        //       subscribersCount: 1,
-        //       isSubscribed: 1,
-        //     },
-        //   },
+    
         ]);
 
     return res.status(200).json(
