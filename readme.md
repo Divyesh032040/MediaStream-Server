@@ -1,4 +1,4 @@
-# YouTube-Backend 
+# MediaStream Server Backend for youtube like Platform
 This is a mini ``YOUTUBE+TBACKEND`` project that covers the major functionalities of youtube
 
 ## Table of Contents
